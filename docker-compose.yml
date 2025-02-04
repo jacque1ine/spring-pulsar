@@ -27,8 +27,6 @@ services:
       - pulsar_network
     platform: linux/amd64
 
-
-
 networks:
   pulsar_network:
     name: pulsar_network

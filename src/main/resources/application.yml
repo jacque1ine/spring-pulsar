@@ -1,0 +1,12 @@
+server:
+  port: 9191
+
+spring:
+  pulsar:
+    client:
+      service-url: pulsar://localhost:6650
+    producer:
+      topic-name: jf-plain-topic
+    consumer:
+      subscription:
+        name: my-subscription
