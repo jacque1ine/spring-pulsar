@@ -1,5 +1,6 @@
 package com.jacque1ine.producer;
 
+import com.jacque1ine.dto.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,24 @@ import org.springframework.stereotype.Service;
 public class EventPublisher {
 
 
-    @Value("${spring.pulsar.producer.topic-name}")
-    private String topicName;
+    @Value("${spring.pulsar.producer.topic-name1}")
+    private String topicName1;
+
+    @Value("${spring.pulsar.producer.topic-name2}")
+    private String topicName2;
 
 
     @Autowired
     private PulsarTemplate<Object> template;
 
     public void publishPlainMessage(String message) throws PulsarClientException {
-        template.send(topicName, message);
+        template.send(topicName1, message);
         log.info("EventPublisher::publishPlainMessage publish the event {}", message);
+    }
+
+    public void publishRawMessages(Customer customer) throws PulsarClientException {
+        template.send(topicName2, customer);
+        log.info("EventPublisher::publishPlainMessage publish the event {}", customer.getName());
     }
 
 }

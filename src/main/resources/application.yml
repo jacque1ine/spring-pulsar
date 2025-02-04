@@ -6,7 +6,13 @@ spring:
     client:
       service-url: pulsar://localhost:6650
     producer:
-      topic-name: jf-plain-topic
+      topic-name1: jf-plain-topic
+      topic-name2: jf-raw-topic
     consumer:
       subscription:
         name: my-subscription
+    defaults:
+      type-mappings:
+        - messageType: com.jacque1ine.dto.Customer
+          schema-info:
+            schema-type: JSON
