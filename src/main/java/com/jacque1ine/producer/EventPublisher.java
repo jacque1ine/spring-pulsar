@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-// TODO - investigate if @Component is better?
 @Component
 @Slf4j
 public class EventPublisher {
@@ -18,7 +17,6 @@ public class EventPublisher {
     @Value("${spring.pulsar.producer.topic-name1}")
     private String topicName1;
 
-
     @PostConstruct
     public void init() {
         if (pulsarTemplate == null) {
@@ -26,15 +24,12 @@ public class EventPublisher {
         } else {
             log.info("PulsarTemplate is successfully ≈.");
         }
-
         log.info("Loaded topic name: {}", topicName1);
     }
 
-    private final PulsarTemplate<String> pulsarTemplate;
+    @Autowired
+    private PulsarTemplate<Object> pulsarTemplate;
 
-    public EventPublisher(PulsarTemplate<String> pulsarTemplate) {
-        this.pulsarTemplate = pulsarTemplate;
-    }
 
     public void publishPlainMessage(String message) throws PulsarClientException {
         pulsarTemplate.send(topicName1, message);

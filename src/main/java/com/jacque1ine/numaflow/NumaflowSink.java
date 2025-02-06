@@ -25,11 +25,8 @@ public class NumaflowSink extends Sinker {
     @PostConstruct // starts server automatically when the spring context initializes
     public void startServer() throws Exception {
         server = new Server(this);
-
         server.start();
         server.awaitTermination();
-
-
     }
 
     @Override
