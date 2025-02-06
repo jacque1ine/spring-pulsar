@@ -25,7 +25,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.numaproj.numaflow</groupId>
+            <artifactId>numaflow-java</artifactId>
+            <version>0.9.0</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -51,6 +55,34 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>image-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>dockerBuild</goal>
+                        </goals>
+                        <configuration>
+                            <from>
+                                <image>amazoncorretto:17</image>
+                            </from>
+                            <container>
+                                <mainClass>com.jacque1ine.SpringPulsarApplication</mainClass>
+
+                            </container>
+                            <to>
+                                <image>
+                                    my-sink:v0.0.3
+                                </image>
+                            </to>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

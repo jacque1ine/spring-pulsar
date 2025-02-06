@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: pulsar-manager
+  name: pulsar-manager
+spec:
+  ports:
+    - name: "9527"
+      port: 9527
+      targetPort: 9527
+    - name: "7750"
+      port: 7750
+      targetPort: 7750
+  selector:
+    io.kompose.service: pulsar-manager
