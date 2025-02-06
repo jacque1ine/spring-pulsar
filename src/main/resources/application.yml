@@ -8,6 +8,3 @@ spring:
       service-url: pulsar://localhost:6650
     producer:
       topic-name1: jf-plain-topic
-    consumer:
-      subscription:
-        name: my-subscription

@@ -24,7 +24,7 @@ public class NumaflowSink extends Sinker {
 
     @PostConstruct // starts server automatically when the spring context initializes
     public void startServer() throws Exception {
-        server = new Server(new NumaflowSink());
+        server = new Server(this);
 
         server.start();
         server.awaitTermination();
@@ -49,15 +49,14 @@ public class NumaflowSink extends Sinker {
             }
             try {
                 String msg = new String(datum.getValue());
-//                log.info("Received message: {}, headers - {}", msg, datum.getHeaders());
                 publisher.publishPlainMessage(msg);
-                log.info("processMessage");
-                responseListBuilder.addResponse(Response.responseOK(datum.getId())); //good ack to numaflow
+                log.info("Processed message ID: {}", datum.getId());
+                responseListBuilder.addResponse(Response.responseOK(datum.getId()));
             } catch (Exception e) {
-                // TODO - print the stack trace of the exception. before building the response.
-                responseListBuilder.addResponse(Response.responseFailure( //bad ack
-                        datum.getId(),
-                        e.getMessage()));
+                log.error("Error processing message with ID {}: {}", datum.getId(), e.getMessage(), e);
+                responseListBuilder.addResponse(
+                        Response.responseFailure(datum.getId(), e.getMessage())
+                );
             }
         }
         return responseListBuilder.build();

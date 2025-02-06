@@ -25,7 +25,6 @@ services:
       SPRING_CONFIGURATION_FILE: /pulsar-manager/pulsar-manager/application.properties
     networks:
       - pulsar_network
-    platform: linux/amd64
 
 networks:
   pulsar_network:
