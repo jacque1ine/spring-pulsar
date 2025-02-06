@@ -54,6 +54,7 @@ public class NumaflowSink extends Sinker {
                 log.info("processMessage");
                 responseListBuilder.addResponse(Response.responseOK(datum.getId())); //good ack to numaflow
             } catch (Exception e) {
+                // TODO - print the stack trace of the exception. before building the response.
                 responseListBuilder.addResponse(Response.responseFailure( //bad ack
                         datum.getId(),
                         e.getMessage()));
