@@ -13,6 +13,8 @@ services:
     restart: unless-stopped
     networks:
       - pulsar_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   pulsar-manager:
     image: "apachepulsar/pulsar-manager:v0.4.0"
@@ -25,6 +27,8 @@ services:
       SPRING_CONFIGURATION_FILE: /pulsar-manager/pulsar-manager/application.properties
     networks:
       - pulsar_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   pulsar_network:

@@ -5,6 +5,6 @@ spring:
   pulsar:
     client:
       # TODO - Use this one in our application
-      service-url: pulsar://localhost:6650
+      service-url: pulsar://host.docker.internal:6650
     producer:
       topic-name1: jf-plain-topic
