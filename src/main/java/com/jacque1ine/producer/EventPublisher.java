@@ -1,14 +1,15 @@
 package com.jacque1ine.producer;
 
-import com.jacque1ine.dto.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.pulsar.core.PulsarTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+import javax.annotation.PostConstruct;
+
+@Component
 @Slf4j
 public class EventPublisher {
 
@@ -16,21 +17,24 @@ public class EventPublisher {
     @Value("${spring.pulsar.producer.topic-name1}")
     private String topicName1;
 
-    @Value("${spring.pulsar.producer.topic-name2}")
-    private String topicName2;
-
+    @PostConstruct
+    public void init() {
+        if (pulsarTemplate == null) {
+            log.error("PulsarTemplate is not instantiated!");
+        } else {
+            log.info("PulsarTemplate is successfully ≈.");
+        }
+        log.info("Loaded topic name: {}", topicName1);
+    }
 
     @Autowired
-    private PulsarTemplate<Object> template;
+    private PulsarTemplate<Object> pulsarTemplate;
+
 
     public void publishPlainMessage(String message) throws PulsarClientException {
-        template.send(topicName1, message);
+        pulsarTemplate.send(topicName1, message);
         log.info("EventPublisher::publishPlainMessage publish the event {}", message);
     }
 
-    public void publishRawMessages(Customer customer) throws PulsarClientException {
-        template.send(topicName2, customer);
-        log.info("EventPublisher::publishPlainMessage publish the event {}", customer.getName());
-    }
 
 }
