@@ -1,4 +1,4 @@
-# Apache Pulsar User-Defined Sink in Numaflow with Springboot for local development
+# Apache Pulsar User-Defined Sink in Numaflow with Springboot
 
 This project is a Numaflow pipeline with 3 vertices where the 3rd vertex is an Apache Pulsar User-Defined Sink.
 To implement the image for the User Defined Sink, Spring Boot is used 
@@ -23,6 +23,28 @@ This project uses the [simple-sink pipeline](https://github.com/numaproj/numaflo
 **Vertex 3:** UD Sink - Takes its received messages and publishes them to a topic in Apache Pulsar.
 - **Sink:** The endpoint for processed data that has been outputted from the platform, which is then sent to an external system or application. The purpose of the Sink is to deliver the processed data to its ultimate destination
 - **User-defined sink:** A custom Sink that a user can write using Numaflow SDK when the user needs to output the processed data to a system or using a certain transformation that is not supported by the platform's built-in sinks
+
+## Getting Started/ Commands to run
+
+Pulsar:
+- ` docker-compose up`
+
+Numaflow:
+*     mvn clean install
+*     kubectl apply -f pipeline.yaml
+*     kubectl -n numaflow-system port-forward deployment/numaflow-server 8443:8443
+
+Pulsar Manager set up account:
+````
+  CSRF_TOKEN=$(curl http://localhost:7750/pulsar-manager/csrf-token)
+curl \
+-H "X-XSRF-TOKEN: $CSRF_TOKEN" \
+-H "Cookie: XSRF-TOKEN=$CSRF_TOKEN;" \
+-H "Content-Type: application/json" \
+-X PUT http://localhost:7750/pulsar-manager/users/superuser \
+-d '{"name": "admin", "password": "apachepulsar", "description": "test", "email": "username@test.org"}'
+````
+
 
 ## How this project works
 
@@ -67,27 +89,6 @@ This image should be built and present locally on all Kubernetes nodes where the
 since the imagePullPolicy is set to Never. 
 If the image is not locally available, the container will fail to start.
 
-
-## Commands
-
-Pulsar:
-- ` docker-compose up`
-
-Numaflow:
-*     mvn clean install
-*     kubectl apply -f pipeline.yaml
-*     kubectl -n numaflow-system port-forward deployment/numaflow-server 8443:8443
-
-Pulsar Manager set up account:
-````
-  CSRF_TOKEN=$(curl http://localhost:7750/pulsar-manager/csrf-token)
-curl \
--H "X-XSRF-TOKEN: $CSRF_TOKEN" \
--H "Cookie: XSRF-TOKEN=$CSRF_TOKEN;" \
--H "Content-Type: application/json" \
--X PUT http://localhost:7750/pulsar-manager/users/superuser \
--d '{"name": "admin", "password": "apachepulsar", "description": "test", "email": "username@test.org"}'
-````
 
 ## Why use Spring Boot? 
 **Dependency Injection (`@Autowire`d):**
