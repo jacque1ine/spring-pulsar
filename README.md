@@ -146,8 +146,11 @@ In general:
 
 When you manually instantiate a bean using new, you bypass the entire Spring lifecycle. This means that Spring doesn’t get a chance to inject its dependencies into that instance.
 
+---
+
 ## Extra_hosts configuration: host.docker.internal 
 **Client**: requests resources or services from a server. 
+
 **Server**: provides resources or services to users
 
 In this project, the Numaflow source is the server, while Pulsar is the client. 
@@ -166,8 +169,8 @@ org.apache.pulsar.shade.io.netty.channel.AbstractChannel$AnnotatedConnectExcepti
 
 ````
 
-#### How I fixed: 
-To get a Kubernetes pod to access a service (Apache Pulsar in this case) running locally on a machine: 
+### How I fixed: 
+To get a Kubernetes pod to access a container running locally on a machine: 
 
 **Docker Containers and Host Network:**
 
