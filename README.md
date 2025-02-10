@@ -154,8 +154,9 @@ When you manually instantiate a bean using new, you bypass the entire Spring lif
 
 **Server**: provides resources or services to users
 
-In this project, the Numaflow source is the server, while Pulsar is the client. 
-Each Numaflow vertex is running as a seperate pod in Kubernetes. 
+In this project, the pulsar cluster is the server, while the Numaflow Pulsar UDSource and Sink are the client.
+A vertex is a unit which can scale up and down, meaning it can have more than one pod.
+Each Numaflow vertex is running as pods in Kubernetes. 
 The source is generating messages at a constant rating and sending them to the Sink. 
 The sink then needs to take these messages, and get them into Pulsar so that Pulsar can publish these messages.
 The problem is, Pulsar is running in a container locally. 
